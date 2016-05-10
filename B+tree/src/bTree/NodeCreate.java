@@ -1,6 +1,6 @@
 package bTree;
 
-public class Main
+public class NodeCreate
 {
 	public Node root;
 	
@@ -12,7 +12,6 @@ public class Main
 		private int lenc;
 		public Node(int k){
 			this.k[lenk] = k;
-			this.lenk++;
 		}
 		public int[] getk(){
 			return k;
@@ -29,10 +28,11 @@ public class Main
 		public int getlenc(){
 			return lenc;
 		}
-	}
-	
-	public static void main(String[] args)
-	{
-		
+		public void putlenk(int input){
+			lenk = input;
+		}
+		public void putlenc(int input){
+			lenc = input;
+		}
 	}
 }
