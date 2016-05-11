@@ -3,36 +3,83 @@ package bTree;
 public class NodeCreate
 {
 	public Node root;
-	
-	public class Node{
-		private int[] k = new int[4];
-		private Node[] c = new Node[5];
+
+	public class Node
+	{
+		private int size = 0;
+		private int childsize = 0;
+		private int[] key = new int[4];
+		private Node[] childtree = new Node[5];
 		private Node parent;
-		private int lenk; //k 배열에 얼마나 찼는지
-		private int lenc;
-		public Node(int k){
-			this.k[lenk] = k;
+
+		public int getchildsize()
+		{
+			return childsize;
 		}
-		public int[] getk(){
-			return k;
+		public void putchildsize(int i)
+		{
+			childsize = i;
 		}
-		public Node[] getc(){
-			return c;
+		
+		public int getkey(int index){
+			return key[index];
 		}
-		public Node getparent(){
+		
+		public Node getchild(int index){
+			return childtree[index];
+		}
+		
+		public int getsize()
+		{
+			return size;
+		}
+
+		public Node(int input)
+		{
+			addkey(input);
+		}
+
+		public Node getparent()
+		{
 			return parent;
 		}
-		public int getlenk(){
-			return lenk;
+
+		public void putparent(Node p)
+		{
+			parent = p;
 		}
-		public int getlenc(){
-			return lenc;
+
+		public void addkey(int input)
+		{
+			int i = 0;
+			if (size == 0)
+				key[0] = input;
+			else
+			{
+				while (input > key[i])
+					i++;
+				for (int j = size - 1; j >= i; j--)
+				{
+					key[j + 1] = key[j];
+				}
+				key[i] = input;
+
+				size++;
+			}
 		}
-		public void putlenk(int input){
-			lenk = input;
-		}
-		public void putlenc(int input){
-			lenc = input;
+
+		public int deletekey(int index)
+		{
+			int removed = key[index];
+
+			for (int i = index + 1; i <= size - 1; i++)
+			{
+				key[i - 1] = key[i];
+			}
+			size--;
+			key[size] = 0;
+			return removed;
 		}
 	}
+
 }
