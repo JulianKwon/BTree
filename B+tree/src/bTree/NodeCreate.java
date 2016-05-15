@@ -2,7 +2,7 @@ package bTree;
 
 public class NodeCreate
 {
-	public Node root;
+	public static Node root;
 
 	public class Node
 	{
@@ -65,7 +65,7 @@ public class NodeCreate
 			}
 			else
 			{
-				while (input > key[i])
+				while (input > key[i] && i < size)
 					i++;
 				for (int j = size - 1; j >= i; j--)
 				{
