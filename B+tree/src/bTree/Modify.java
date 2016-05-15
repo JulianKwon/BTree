@@ -1,8 +1,13 @@
 package bTree;
 
+import bTree.NodeCreate.Node;
+
 public class Modify extends NodeCreate
 {
-
+	Node temp;
+	
+	
+	
 	public boolean chk_leaf(Node r)
 	{
 		for (int i = 0; i < 5; i++)
@@ -14,52 +19,91 @@ public class Modify extends NodeCreate
 		}
 		return true;
 	}
-
+	
+	public Node Search(int key, Node root)
+	{
+		int i = 0;
+		while(root.getkey(i) > key)
+			i++;
+		if(chk_leaf(root))
+			return root;
+		else
+			root = Search(key, root.getchild(i));
+		return root;
+	}
+	
 	public void insert(int key)
 	{
-		if (root == null)
+		insert(key, root);
+	}
+
+	public void insert(int key, Node roo)
+	{
+		if (roo == null)
 		{
-			root = new Node(key);
-
-			int in = root.getsize() + 1;
-
-			root.putchildsize(in);
+			roo = new Node();
+			roo.addkey(key);
 		} else
 		{
-			if (root.getchildsize() == 4)
-			{ // root is full
-				if (key < root.getkey(1)) // key <= 0 1
-				{
-					Node s = new Node(root.getkey(1));
-					split_child(1, root);
-				} else if (key > root.getkey(2)) // 2 3 =< key
-				{ 
-
-				}
-			}
+			Node original = Search(key, roo);
+			if (original.isfull()) // roo is full
+				roo = split_child(key, original);
+			else
+				original.addkey(key);
 		}
 	}
 
-	public void split_child(int key, Node root)
+	public Node split_child(int key, Node ro)
 	{
-		Node parent = root.getparent();
-		Node newn = new Node(root.getk()[key]);
-		if (parent.getlenk() < 4) // root's parent is not full
+		Node parent = ro.getparent();
+		Node newro = new Node();
+		Node newn = new Node();
+		Node rot = null;
+		if (parent == null)
 		{
-			for (int i = 4; i > key; i--)
-			{ // split root's keys and children by degree key
-				newn.getc()[i - (4 - key) - 1] = root.getc()[i];
-				root.getc()[i] = null;
-				if (i > key + 1)
+			if (key < ro.getkey(1))
+			{
+				int k = ro.getkey(1);
+				newro.addkey(k); // add key to the new parent node
+				for(int i = 0; i < 2; i++) // move keys from original node to new sibling node
 				{
-					int a = i - 1; // ****
-					newn.getk()[a - (4 - key) - 1] = root.getk()[a];
-					root.getk()[a] = -1;
+					newn.addkey(ro.getkey(i + 2));
+					ro.deletekey(i + 2);
 				}
+				for(int i = 2; i < 5; i++){ //move childtrees from original node to new sibling node
+					newn.putchild(ro.getchild(i));
+					ro.deletechild(i);
+				}
+				ro.putparent(newro);
+				newn.putparent(newro);
+				newro.putchild(ro);
+				newro.putchild(newn);
+				ro.addkey(key);
+			} else if (key > ro.getkey(2) || key > ro.getkey(1) && key < ro.getkey(2)) 
+			{
+				int k = ro.getkey(2);
+				newro.addkey(k);
+				newn.addkey(ro.getkey(3)); //move keys from original node to new sibling node
+				newn.deletekey(3);
+				for(int i = 3; i < 5; i++) //move childtrees from original node to new sibling node
+				{
+					newn.putchild(ro.getchild(i));
+					ro.deletechild(i);
+				}
+				ro.putparent(newro);
+				newn.putparent(newro);
+				newro.putchild(ro);
+				newro.putchild(newn);
+				newro.addkey(key);
 			}
-			int k = root.getk()[key];
-			root.getk()[key] = -1;
+			rot = newro;
+		} else
+		{
+			if(!parent.isfull())
+			{
+				
+			}
 		}
-
+		return rot;
 	}
 }
