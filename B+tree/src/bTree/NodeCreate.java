@@ -81,12 +81,12 @@ public class NodeCreate
 		{
 			int removed = key[index];
 
-			for (int i = index + 1; i <= size - 1; i++)
+			for (int i = index; i <= size - 2; i++) // move forward
 			{
-				key[i - 1] = key[i];
+				key[i] = key[i + 1];
 			}
+			key[size - 1] = 0;
 			size--;
-			key[size] = 0;
 			return removed;
 		}
 
@@ -101,14 +101,16 @@ public class NodeCreate
 			childsize++;
 		}
 
-		public void deletechild(int index)
+		public Node deletechild(int index)
 		{
+			Node child = childtree[index];
 			for(int i = 0; i < 4 - index; i++)
 			{
 				childtree[i + index + 1] = childtree[i + index];
 			}
 			childtree[4] = null;
 			childsize--;
+			return child;
 		}
 	}
 
