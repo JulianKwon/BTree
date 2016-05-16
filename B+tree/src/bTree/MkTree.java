@@ -12,6 +12,7 @@ public class MkTree extends Modify
 			FileReader fileReader = new FileReader(aFile);
 			BufferedReader reader = new BufferedReader(fileReader);
 			String line = null;
+			initialize();
 			while ((line = reader.readLine()) != null)
 				insert(Integer.parseInt(line));
 			reader.close();

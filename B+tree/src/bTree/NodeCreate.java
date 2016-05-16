@@ -6,18 +6,18 @@ public class NodeCreate
 
 	public class Node
 	{
-		private int size; //key의 개수
-		private int childsize; //childtree의 개수
+		private int size; // key의 개수
+		private int childsize; // childtree의 개수
 		private int[] key = new int[4];
 		private Node[] childtree = new Node[5];
 		private Node parent;
 
-		public Node() //생성자
-		{ 
+		public Node() // 생성자
+		{
 			size = 0;
 			childsize = 0;
 		}
-		
+
 		public boolean isfull()
 		{
 			if (size == 4)
@@ -25,11 +25,19 @@ public class NodeCreate
 			return false;
 		}
 
+		public boolean chk_leaf()
+		{
+			// if leaf, there's no child
+			if (childsize != 0)
+				return false;
+			return true;
+		}
+
 		public int getchildsize()
 		{
 			return childsize;
 		}
-		
+
 		public int getkey(int index)
 		{
 			return key[index];
@@ -62,8 +70,7 @@ public class NodeCreate
 			{
 				key[0] = input;
 				size++;
-			}
-			else
+			} else
 			{
 				while (input > key[i] && i < size)
 					i++;
@@ -104,7 +111,7 @@ public class NodeCreate
 		public Node deletechild(int index)
 		{
 			Node child = childtree[index];
-			for(int i = 0; i < 4 - index; i++)
+			for (int i = 0; i < 4 - index; i++)
 			{
 				childtree[i + index + 1] = childtree[i + index];
 			}
