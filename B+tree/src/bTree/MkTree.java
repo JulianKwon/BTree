@@ -14,6 +14,7 @@ public class MkTree extends Modify
 			String line = null;
 			initialize();
 			while ((line = reader.readLine()) != null)
+				// read line then insert number
 				insert(Integer.parseInt(line));
 			reader.close();
 		} catch (Exception ex)

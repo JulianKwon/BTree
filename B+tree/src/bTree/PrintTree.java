@@ -15,16 +15,15 @@ public class PrintTree extends NodeCreate
 		{
 			if(rot.getkey(j) != 0)
 				System.out.print(rot.getkey(j) + " ");
-			if (j == size - 1)
-				System.out.println();
+				
 		}
+		System.out.println();
 		if(!rot.chk_leaf())
 		{
-			for (int j = 0; j < rot.getchildsize(); j++)
+			for (int j = 0; j < size + 2; j++)
 			{
 				print(level + 1, rot.getchild(j));
 			}
 		}
-		
 	}
 }

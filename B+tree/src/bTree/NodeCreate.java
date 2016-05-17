@@ -6,16 +6,17 @@ public class NodeCreate
 
 	public class Node
 	{
-		private int size; // key의 개수
-		private int childsize; // childtree의 개수
+		private int size; // number of key
+		private int childsize; // number of childtree
 		private int[] key = new int[4];
 		private Node[] childtree = new Node[5];
 		private Node parent;
 
-		public Node() // 생성자
+		public Node() // initialize
 		{
 			size = 0;
 			childsize = 0;
+			parent = null;
 		}
 
 		public boolean isfull()
@@ -111,14 +112,13 @@ public class NodeCreate
 		public Node deletechild(int index)
 		{
 			Node child = childtree[index];
-			for (int i = 0; i < 4 - index; i++)
+			for (int i = index; i < childsize - 1; i++)
 			{
-				childtree[i + index + 1] = childtree[i + index];
+				childtree[i] = childtree[i + 1];
 			}
-			childtree[4] = null;
+			childtree[childsize - 1] = null;
 			childsize--;
 			return child;
 		}
 	}
-
 }

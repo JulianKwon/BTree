@@ -3,27 +3,12 @@ package bTree;
 public class Modify extends NodeCreate
 {
 	Node temp;
-
-//	public Node Search(int key, Node root)
-//	{
-//		int i = 0;
-//		// search for the position in key array
-//		// of root node
-//		while (root.getkey(i) > key && !root.isfull())
-//			i++;
-//		if (chk_leaf(root) || (root.isfull() && chk_leaf(root)))
-//			return root;
-//		else
-//			root = Search(key, root.getchild(i));
-//		return root;
-//
-//	}
 	
 	public void initialize()
 	{
 		root = new Node();
 	}
-
+	
 	public void insert(int key)
 	{
 		insert(key, root);
@@ -33,6 +18,7 @@ public class Modify extends NodeCreate
 	{
 		if (r.isfull())
 		{
+			// allocate new node as new root
 			Node s = new Node();
 			s.putchild(r);
 			r.putparent(s);
@@ -41,7 +27,9 @@ public class Modify extends NodeCreate
 			root = s;
 		} else
 		{
-			insertNonfull(key, root);
+			if(root == null)
+				initialize();
+			insertNonfull(key, r);
 		}
 	}
 
@@ -80,18 +68,24 @@ public class Modify extends NodeCreate
 	public void split_child(int index, Node y)
 	{
 		Node x = y.getparent();
-		Node z = new Node();
-		// move half of keys from y to z(new node)
+		Node z = new Node(); 
+		// new node for old node's(y's) sibling
+		// move half of keys from y to z
 		for (int i = 2; i < 4; i++)
 			z.addkey(y.deletekey(i));
-
+		
+		// move middle key(in this case, key[1]) to parent
+		x.addkey(y.deletekey(1));
+		
 		// if y is not a leaf, move children, too.
 		if (!y.chk_leaf())
 		{
+			Node c = null;
 			for (int i = 2; i < 5; i++)
 			{
-				z.putchild(y.deletechild(i));
-				y.deletechild(i).putparent(z);
+				c = y.deletechild(i);
+				z.putchild(c);
+				c.putparent(z);
 			}
 		}
 		// insert z as x's child
@@ -100,6 +94,5 @@ public class Modify extends NodeCreate
 		// y   z
 		x.putchild(z);
 		z.putparent(x);
-		
 	}
 }
