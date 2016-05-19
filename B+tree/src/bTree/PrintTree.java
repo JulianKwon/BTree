@@ -18,9 +18,9 @@ public class PrintTree extends NodeCreate
 				
 		}
 		System.out.println();
-		if(!rot.chk_leaf())
+		if(!rot.isleaf())
 		{
-			for (int j = 0; j < size; j++)
+			for (int j = 0; j < size + 1; j++)
 			{
 				print(level + 1, rot.getchild(j));
 			}
