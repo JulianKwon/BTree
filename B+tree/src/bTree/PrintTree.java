@@ -20,7 +20,7 @@ public class PrintTree extends NodeCreate
 		System.out.println();
 		if(!rot.chk_leaf())
 		{
-			for (int j = 0; j < size + 2; j++)
+			for (int j = 0; j < size; j++)
 			{
 				print(level + 1, rot.getchild(j));
 			}

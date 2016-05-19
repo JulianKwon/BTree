@@ -4,6 +4,8 @@ public class Modify extends NodeCreate
 {
 	Node temp;
 	
+	boolean debug = true;
+	
 	public void initialize()
 	{
 		root = new Node();
@@ -11,32 +13,43 @@ public class Modify extends NodeCreate
 	
 	public void insert(int key)
 	{
+		if(debug)
+			System.out.println(key);
 		insert(key, root);
 	}
 	
 	public void insert(int key, Node r)
 	{
+		Node s = new Node();
 		if (r.isfull())
 		{
 			// allocate new node as new root
-			Node s = new Node();
+			
 			s.putchild(r);
 			r.putparent(s);
+			
 			split_child(1, r);
 			insertNonfull(key, s);
 			root = s;
+			
+			if(debug)
+				System.out.println(s.getparent());
 		} else
 		{
 			if(root == null)
 				initialize();
 			insertNonfull(key, r);
+			
+			if(debug)
+				System.out.println(s.getparent());
 		}
 	}
 
 	public void insertNonfull(int key, Node x)
 	{
 		int i = x.getsize() - 1;
-
+		
+		// parameter node is a leaf node
 		if (x.chk_leaf())
 		{
 			x.addkey(key);
