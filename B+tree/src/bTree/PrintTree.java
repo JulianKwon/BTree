@@ -7,10 +7,10 @@ public class PrintTree extends NodeCreate
 		int size = rot.getsize();
 		
 		for(int j = 0; j < level - 1; j++)
-		{
 			System.out.print("   ");
-		}
+		
 		System.out.print("[" + level + "] ");
+		
 		for(int j = 0; j < size; j++)
 		{
 			if(rot.getkey(j) != 0)

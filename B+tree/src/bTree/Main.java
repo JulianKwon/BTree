@@ -33,13 +33,12 @@ public class Main extends NodeCreate
 				operation(choice);
 		}
 	}
-	
 
 	public static void operation(int c)
 	{
 		int input = 0;
 
-		if(c == 1)
+		if (c == 1)
 		{
 			while (true)
 			{
@@ -50,36 +49,39 @@ public class Main extends NodeCreate
 				else
 					Insert.insert(input);
 			}
-			
-		}
-			// if(c == 2)
-			// {while (true)
-			// {
-			// System.out.print("삭제할 키 (����: -1): ");
-			// input = s.nextInt();
-			// if (input == -1)
-			// break;
-			// else if (!intree(input, root))
-			// System.out.println("Ű ���� ���� ������ �� �����ϴ�.");
-			// else
-			// delete(input);
-			// }
-			// }
-			// case 3:
-			// while (true)
-			// {
-			// System.out.print("�˻��� Ű (����: -1): ");
-			// input = s.nextInt();
-			// if (input == -1)
-			// break;
-			// else
-			// searchprint(input);
-			// }
 
-		else if(c == 4)
+		}
+		// if(c == 2)
+		// {while (true)
+		// {
+		// System.out.print("삭제할 키 (����: -1): ");
+		// input = s.nextInt();
+		// if (input == -1)
+		// break;
+		// else if (!intree(input, root))
+		// System.out.println("Ű ���� ���� ������ �� �����ϴ�.");
+		// else
+		// delete(input);
+		// }
+		// }
+		if (c == 3)
+		{
+			while (true)
+			{
+				System.out.print("검색할 키 (종료: -1): ");
+				input = s.nextInt();
+				if (input == -1)
+					break;
+				else
+					Search.searchkey(1, input, root, true);
+			}
+
+		}
+
+		else if (c == 4)
 			PrintTree.print(1, root);
-			
-		else if(c == 9)
+
+		else if (c == 9)
 		{
 			System.out.print("데이터 파일: ");
 			String str = s.next();
