@@ -17,9 +17,14 @@ public class Search extends NodeCreate
 			return searchkey(key, root.getchild(i));
 	}
 	
-	public static void searchtrace(int key, Node root)
+	public static void searchtrace(int level, int key, Node root)
 	{
 		int i = 0;
+		int size = root.getsize();
+		
+		for(int j = 0 ; j < level - 1; j++)
+			System.out.print("   ");
+		System.out.print("[" + level + "] ");
 		while (root.get)
 	}
 }

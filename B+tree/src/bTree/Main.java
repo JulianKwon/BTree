@@ -55,7 +55,7 @@ public class Main extends NodeCreate
 			// if(c == 2)
 			// {while (true)
 			// {
-			// System.out.print("������ Ű (����: -1): ");
+			// System.out.print("삭제할 키 (����: -1): ");
 			// input = s.nextInt();
 			// if (input == -1)
 			// break;
@@ -81,10 +81,10 @@ public class Main extends NodeCreate
 			
 		else if(c == 9)
 		{
-			System.out.print(": ");
+			System.out.print("데이터 파일: ");
 			String str = s.next();
 			read(str);
-			System.out.println("���ԿϷ�");
+			System.out.println("삽입 완료");
 		}
 	}
 
