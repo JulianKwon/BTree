@@ -85,18 +85,21 @@ public class NodeCreate
 		public void putchild(Node n) {
 			
 			if (childsize == 0)
+			{
 				childtree[0] = n;
+				childsize++;
+			}
 			else {
-				int i = 0;
-				while (n.getkey(0) > key[i] && (key[i] != -1 || key[i] != 0) && i < childsize)
-					i++;
-				
+				int i = size - 1;
+				while (n.getkey(0) < key[i] && i >= 0)
+					i--;
+				i++;
 				for (int j = childsize - 1; j >= i; j--) 
 					childtree[j+1] = childtree[j];
 				
 				childtree[i] = n;
+				childsize++;
 			}
-			childsize++;
 		}
 
 		public Node deletechild(int index) {
