@@ -2,7 +2,7 @@ package bTree;
 
 public class PrintTree extends NodeCreate
 {
-	public void print(int level, Node rot)
+	public static void print(int level, Node rot)
 	{
 		int size = rot.getsize();
 		

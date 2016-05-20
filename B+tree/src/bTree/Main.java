@@ -3,19 +3,91 @@ package bTree;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Scanner;
 
+public class Main extends NodeCreate
+{
 
-public class Main extends NodeCreate{
-	
 	public static Node root;
-	
-	public static void main(String[] args) {
+
+	public static int choice;
+	public static Scanner s = new Scanner(System.in);
+
+	public static void main(String[] args)
+	{
 		// TODO Auto-generated method stub
-		PrintTree pt = new PrintTree();
-		read("rand100.txt");
-		pt.print(1, root);
+
+		while (true)
+		{
+			System.out.println("1.삽입");
+			System.out.println("2.삭제");
+			System.out.println("3.검색");
+			System.out.println("4.출력");
+			System.out.println("9.일괄 삽입");
+			System.out.println("0.종료");
+			System.out.print("선택 : ");
+			choice = s.nextInt();
+			if (choice == 0)
+				break;
+			else
+				operation(choice);
+		}
 	}
 	
+
+	public static void operation(int c)
+	{
+		int input = 0;
+
+		if(c == 1)
+		{
+			while (true)
+			{
+				System.out.print("삽입할 키 (종료 : -1): ");
+				input = s.nextInt();
+				if (input == -1)
+					break;
+				else
+					Insert.insert(input);
+			}
+			
+		}
+			// if(c == 2)
+			// {while (true)
+			// {
+			// System.out.print("삭제할 키 (종료: -1): ");
+			// input = s.nextInt();
+			// if (input == -1)
+			// break;
+			// else if (!intree(input, root))
+			// System.out.println("키 값이 없어 삭제할 수 없습니다.");
+			// else
+			// delete(input);
+			// }
+			// }
+			// case 3:
+			// while (true)
+			// {
+			// System.out.print("검색할 키 (종료: -1): ");
+			// input = s.nextInt();
+			// if (input == -1)
+			// break;
+			// else
+			// searchprint(input);
+			// }
+
+		else if(c == 4)
+			PrintTree.print(1, root);
+			
+		else if(c == 9)
+		{
+			System.out.print("데이터 파일: ");
+			String str = s.next();
+			read(str);
+			System.out.println("삽입완료");
+		}
+	}
+
 	public static void read(String input)
 	{
 		try
@@ -26,81 +98,11 @@ public class Main extends NodeCreate{
 			String line = null;
 			while ((line = reader.readLine()) != null)
 				// read line then insert number
-//				System.out.println(line);
-				insert(Integer.parseInt(line));
+				Insert.insert(Integer.parseInt(line));
 			reader.close();
 		} catch (Exception ex)
 		{
 		}
 	}
-	
-	public static void insert(int key)
-	{
-		if(root == null)
-		{
-			Node node = new Node();
-			node.addkey(key);
-			root = node;
-		}
-		else
-		{
-			if(root.isfull())
-			{
-				Node newn = new Node();
-				
-				newn.putchild(root);
-				splitchild(newn, root);
-				root = newn;
-				simpleinsert(key, root);
-			}else
-				simpleinsert(key, root);
-		}
-	}
-	
-	public static void simpleinsert(int key, Node root)
-	{
-		int i = root.getsize() - 1;
-		
-		if(root.isleaf())
-			root.addkey(key);
-		
-		else
-		{
-			while(i >= 0 && key < root.getkey(i))
-				i--;
-			i++;
-			if(root.getchild(i).isfull())
-			{
-				splitchild(root, root.getchild(i));
-				
-				if(key > root.getkey(i))
-					i++;				
-			}
-			simpleinsert(key, root.getchild(i));
-		}
-	}
-	
-	public static void splitchild(Node parent, Node child)
-	{
-		Node z = new Node();
-		
-		for (int i = 2; i < 4; i++)
-			z.addkey(child.deletekey(2));
-		
-		parent.addkey(child.deletekey(1));
-		
-		if (!child.isleaf())
-		{
-			Node c = null;
-			for (int i = 2; i < 5; i++)
-			{
-				c = child.deletechild(2);
-				z.putchild(c);
-			}
-		}
-		
-		parent.putchild(z);
-	}
-	
 
 }
