@@ -19,13 +19,13 @@ public class Main extends NodeCreate
 
 		while (true)
 		{
-			System.out.println("1.»ğÀÔ");
-			System.out.println("2.»èÁ¦");
-			System.out.println("3.°Ë»ö");
-			System.out.println("4.Ãâ·Â");
-			System.out.println("9.ÀÏ°ı »ğÀÔ");
-			System.out.println("0.Á¾·á");
-			System.out.print("¼±ÅÃ : ");
+			System.out.println("1.ì‚½ì…");
+			System.out.println("2.ì‚­ì œ");
+			System.out.println("3.ê²€ìƒ‰");
+			System.out.println("4.ì¶œë ¥");
+			System.out.println("9.ì¼ê´„ ì‚½ì…");
+			System.out.println("0.ì¢…ë£Œ");
+			System.out.print("ì„ íƒ : ");
 			choice = s.nextInt();
 			if (choice == 0)
 				break;
@@ -43,7 +43,7 @@ public class Main extends NodeCreate
 		{
 			while (true)
 			{
-				System.out.print("»ğÀÔÇÒ Å° (Á¾·á : -1): ");
+				System.out.print("ì‚½ì…í•  í‚¤ (ì¢…ë£Œ: -1): ");
 				input = s.nextInt();
 				if (input == -1)
 					break;
@@ -55,12 +55,12 @@ public class Main extends NodeCreate
 			// if(c == 2)
 			// {while (true)
 			// {
-			// System.out.print("»èÁ¦ÇÒ Å° (Á¾·á: -1): ");
+			// System.out.print("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å° (ï¿½ï¿½ï¿½ï¿½: -1): ");
 			// input = s.nextInt();
 			// if (input == -1)
 			// break;
 			// else if (!intree(input, root))
-			// System.out.println("Å° °ªÀÌ ¾ø¾î »èÁ¦ÇÒ ¼ö ¾ø½À´Ï´Ù.");
+			// System.out.println("Å° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			// else
 			// delete(input);
 			// }
@@ -68,7 +68,7 @@ public class Main extends NodeCreate
 			// case 3:
 			// while (true)
 			// {
-			// System.out.print("°Ë»öÇÒ Å° (Á¾·á: -1): ");
+			// System.out.print("ï¿½Ë»ï¿½ï¿½ï¿½ Å° (ï¿½ï¿½ï¿½ï¿½: -1): ");
 			// input = s.nextInt();
 			// if (input == -1)
 			// break;
@@ -81,10 +81,10 @@ public class Main extends NodeCreate
 			
 		else if(c == 9)
 		{
-			System.out.print("µ¥ÀÌÅÍ ÆÄÀÏ: ");
+			System.out.print(": ");
 			String str = s.next();
 			read(str);
-			System.out.println("»ğÀÔ¿Ï·á");
+			System.out.println("ï¿½ï¿½ï¿½Ô¿Ï·ï¿½");
 		}
 	}
 

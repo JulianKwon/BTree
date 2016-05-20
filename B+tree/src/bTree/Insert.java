@@ -1,62 +1,31 @@
 package bTree;
 
-
 public class Insert extends NodeCreate
 {
-	private static boolean in = false;
-	
-	
-	public static boolean intree(int key, Node n)
-	{
-		int i = 0;
-		if(n.isleaf())
-		{
-			for(int j = 0 ; j < n.getsize(); j++)
-			{
-				if(n.getkey(j) == key)
-				{
-					in = true;
-					break;
-				}
-			}
-		}else
-		{
-			while(n.getkey(i) < key && i < n.getsize())
-				i++;
-			intree(key, n.getchild(i));
-		}
-		return in;
-	}
-	
-	
 
 	public static void insert(int key)
 	{
 		Node root = Main.root;
-		
-		if(!intree(key, root))
+
+		if (root == null)
 		{
-			if (root == null)
+			Node node = new Node();
+			node.addkey(key);
+			root = node;
+		} else
+		{
+			if (root.isfull())
 			{
-				Node node = new Node();
-				node.addkey(key);
-				root = node;
+				Node newn = new Node();
+
+				newn.putchild(root);
+				splitchild(newn, root, key);
+				root = newn;
+				simpleinsert(key, root);
 			} else
-			{
-				if (root.isfull())
-				{
-					Node newn = new Node();
-					
-					newn.putchild(root);
-					splitchild(newn, root, key);
-					root = newn;
-					simpleinsert(key, root);
-				} else
-					simpleinsert(key, root);
-			}
-			Main.root = root;			
-		}else
-			System.out.println("키 값이 중복되었습니다.");
+				simpleinsert(key, root);
+		}
+		Main.root = root;
 	}
 
 	public static void simpleinsert(int key, Node root)
