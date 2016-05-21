@@ -17,42 +17,75 @@ public class Search extends NodeCreate
 		while (i < size && root.getkey(i) < key && root.getkey(i) != key)
 			i++;
 		
-		// find if there exist a key
-		if (root.getkey(i) == key)
+		// if the i value is bigger than the array size
+		if (i == size)
 		{
 			if (print)
 			{
-				for(int j = 0; j < i; j++)
+				for (int j = 0; j < size; j++)
 					System.out.print(root.getkey(j) + " ");
-				System.out.print("*" + root.getkey(i));
-				for(int j = i + 1; j < size; j++)
-					System.out.print(root.getkey(j) + " ");
-			}
-			return true;
-		} 
-		// no key in this node
-		else 
-		{
-			if(print)
-			{
-				for(int j = 0; j < size; j++)
-					System.out.print(root.getkey(j) + " ");				
-			}
-			
-			//if the node is a leaf there is no existing key in this tree
+			} // if the node is a leaf there is no existing key in this tree
 			if (root.isleaf())
 			{
 				if (print)
-					System.out.println("ì°¾ëŠ” í‚¤ê°’ì´ ì¡´ìž¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
-				
+				{
+					System.out.println();
+					System.out.println("Ã£´Â Å°°ªÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				}
+
 				return false;
-			} 
-			//recursively search for 'key'
+			}
+			// recursively search for 'key'
 			else
 			{
-				if(print)
+				if (print)
 					System.out.println();
 				return searchkey(level + 1, key, root.getchild(i), print);
+			}
+		} 
+		
+		// if i value is normal
+		else
+		{
+			// find if there exist a key
+			if (root.getkey(i) == key)
+			{
+				if (print)
+				{
+					for (int j = 0; j < i; j++)
+						System.out.print(root.getkey(j) + " ");
+					System.out.print("*" + root.getkey(i) + " ");
+					for (int j = i + 1; j < size; j++)
+						System.out.print(root.getkey(j) + " ");
+					System.out.println();
+				}
+				
+				return true;
+			}
+			// no key in this node
+			else
+			{
+				if (print)
+				{
+					for (int j = 0; j < size; j++)
+						System.out.print(root.getkey(j) + " ");
+				}
+
+				// if the node is a leaf there is no existing key in this tree
+				if (root.isleaf())
+				{
+					if (print)
+						System.out.println("Ã£´Â Å°°ªÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+
+					return false;
+				}
+				// recursively search for 'key'
+				else
+				{
+					if (print)
+						System.out.println();
+					return searchkey(level + 1, key, root.getchild(i), print);
+				}
 			}
 		}
 	}
