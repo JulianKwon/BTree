@@ -6,7 +6,8 @@ public class Insert extends NodeCreate
 	public static void insert(int key)
 	{
 		Node root = Main.root;
-
+		
+		// initialize
 		if (root == null)
 		{
 			Node node = new Node();
@@ -14,11 +15,14 @@ public class Insert extends NodeCreate
 			root = node;
 		} else
 		{
+			// if the root node is full
 			if (root.isfull())
 			{
 				Node newn = new Node();
-
 				newn.putchild(root);
+				newn.putisleaf(false);
+				
+				// split and insert key
 				splitchild(newn, root, key);
 				root = newn;
 				simpleinsert(key, root);
@@ -31,7 +35,8 @@ public class Insert extends NodeCreate
 	public static void simpleinsert(int key, Node root)
 	{
 		int i = root.getsize() - 1;
-
+		
+		// if the input node is leaf
 		if (root.isleaf())
 			root.addkey(key);
 
@@ -53,9 +58,13 @@ public class Insert extends NodeCreate
 
 	public static void splitchild(Node parent, Node child, int key)
 	{
+		//create new node for sibling of node child
 		Node z = new Node();
+		
+		// z's leaf is y's leaf(boolean)
+		z.putisleaf(child.isleaf());
 
-		if (key < child.getkey(1))
+		if (key < child.getkey(2))
 		{
 			for (int i = 2; i < 4; i++)
 				z.addkey(child.deletekey(2));

@@ -19,13 +19,13 @@ public class Main extends NodeCreate
 
 		while (true)
 		{
-			System.out.println("1.ì‚½ì…");
-			System.out.println("2.ì‚­ì œ");
-			System.out.println("3.ê²€ìƒ‰");
-			System.out.println("4.ì¶œë ¥");
-			System.out.println("9.ì¼ê´„ ì‚½ì…");
-			System.out.println("0.ì¢…ë£Œ");
-			System.out.print("ì„ íƒ : ");
+			System.out.println("1.»ğÀÔ");
+			System.out.println("2.»èÁ¦");
+			System.out.println("3.°Ë»ö");
+			System.out.println("4.Ãâ·Â");
+			System.out.println("9.ÀÏ°ı»ğÀÔ");
+			System.out.println("0.Á¾·á");
+			System.out.print("¼±ÅÃ : ");
 			choice = s.nextInt();
 			if (choice == 0)
 				break;
@@ -42,40 +42,42 @@ public class Main extends NodeCreate
 		{
 			while (true)
 			{
-				System.out.print("ì‚½ì…í•  í‚¤ (ì¢…ë£Œ: -1): ");
+				System.out.print("»ğÀÔÇÒ Å° (Á¾·á: -1): ");
 				input = s.nextInt();
 				if (input == -1)
 					break;
+				else if (Search.searchkey(1, input, root, false))
+					System.out.println("Å°°¡ ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù.");
 				else
 					Insert.insert(input);
 			}
 
 		}
-		// if(c == 2)
-		// {while (true)
-		// {
-		// System.out.print("ì‚­ì œí•  í‚¤ (ï¿½ï¿½ï¿½ï¿½: -1): ");
-		// input = s.nextInt();
-		// if (input == -1)
-		// break;
-		// else if (!intree(input, root))
-		// System.out.println("Å° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
-		// else
-		// delete(input);
-		// }
-		// }
-		if (c == 3)
+		else if (c == 2)
 		{
 			while (true)
 			{
-				System.out.print("ê²€ìƒ‰í•  í‚¤ (ì¢…ë£Œ: -1): ");
+				System.out.print("»èÁ¦ÇÒ Å° (Á¾·á: -1): ");
+				input = s.nextInt();
+				if (input == -1)
+					break;
+				else if (!Search.searchkey(1, input, root, false))
+					System.out.println("»èÁ¦ÇÒ Å°°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				else
+					Delete.deletekey(input);
+			}
+		}
+		else if (c == 3)
+		{
+			while (true)
+			{
+				System.out.print("°Ë»öÇÒ Å° (Á¾·á: -1): ");
 				input = s.nextInt();
 				if (input == -1)
 					break;
 				else
 					Search.searchkey(1, input, root, true);
 			}
-
 		}
 
 		else if (c == 4)
@@ -83,10 +85,10 @@ public class Main extends NodeCreate
 
 		else if (c == 9)
 		{
-			System.out.print("ë°ì´í„° íŒŒì¼: ");
+			System.out.print("µ¥ÀÌÅÍ ÆÄÀÏ: ");
 			String str = s.next();
 			read(str);
-			System.out.println("ì‚½ì… ì™„ë£Œ");
+			System.out.println("»ğÀÔ ¿Ï·á");
 		}
 	}
 

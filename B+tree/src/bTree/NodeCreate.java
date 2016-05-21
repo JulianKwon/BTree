@@ -7,11 +7,13 @@ public class NodeCreate
 		private int childsize; // number of childtree
 		private int[] key = new int[4];
 		private Node[] childtree = new Node[5];
+		private boolean isleaf;
 
 		public Node() // initialize
 		{
 			size = 0;
 			childsize = 0;
+			isleaf = true;
 		}
 
 		public boolean isfull() {
@@ -21,11 +23,11 @@ public class NodeCreate
 		}
 
 		public boolean isleaf() {
-			// if leaf, there's no child
-			if (childsize != 0)
-				return false;
-			else
-				return true;
+			return isleaf;
+		}
+		
+		public void putisleaf(boolean b){
+			isleaf = b;
 		}
 
 		// find if there exists key

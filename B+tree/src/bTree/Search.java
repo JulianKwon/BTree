@@ -2,6 +2,7 @@ package bTree;
 
 public class Search extends NodeCreate
 {
+	// level: printing level, print: if true, print out the path of searching process
 	public static boolean searchkey(int level, int key, Node root, boolean print)
 	{
 		int i = 0;
