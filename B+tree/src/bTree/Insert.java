@@ -6,7 +6,7 @@ public class Insert extends NodeCreate
 	public static void insert(int key)
 	{
 		Node root = Main.root;
-		
+
 		// initialize
 		if (root == null)
 		{
@@ -21,9 +21,9 @@ public class Insert extends NodeCreate
 				Node newn = new Node();
 				newn.putchild(root);
 				newn.putisleaf(false);
-				
+
 				// split and insert key
-				splitchild(newn, root, key);
+				splitchild(newn, root);
 				root = newn;
 				simpleinsert(key, root);
 			} else
@@ -35,19 +35,20 @@ public class Insert extends NodeCreate
 	public static void simpleinsert(int key, Node root)
 	{
 		int i = root.getsize() - 1;
-		
-		// if the input node is leaf
-		if (root.isleaf())
-			root.addkey(key);
-
+		while (i >= 0 && key < root.getkey(i))
+			i--;
+		i++;
+		if(root.getchild(i).isleaf())
+		{
+			root.getchild(i).addkey(i);
+			if(root.getchild(i).isfull())
+				splitchild(root, root.getchild(i));
+		}
 		else
 		{
-			while (i >= 0 && key < root.getkey(i))
-				i--;
-			i++;
 			if (root.getchild(i).isfull())
 			{
-				splitchild(root, root.getchild(i), key);
+				splitchild(root, root.getchild(i));
 
 				if (key > root.getkey(i))
 					i++;
@@ -56,46 +57,29 @@ public class Insert extends NodeCreate
 		}
 	}
 
-	public static void splitchild(Node parent, Node child, int key)
+	public static void splitchild(Node parent, Node child)
 	{
-		//create new node for sibling of node child
+		// create new node for sibling of node child
 		Node z = new Node();
-		
+
 		// z's leaf is y's leaf(boolean)
 		z.putisleaf(child.isleaf());
-
-		if (key < child.getkey(2))
-		{
-			for (int i = 2; i < 4; i++)
-				z.addkey(child.deletekey(2));
-
-			parent.addkey(child.deletekey(1));
-
-			if (!child.isleaf())
-			{
-				Node c = null;
-				for (int i = 2; i < 5; i++)
-				{
-					c = child.deletechild(2);
-					z.putchild(c);
-				}
-			}
-		} else
-		{
+		
+		for(int i = 0 ; i < 2;i++)
 			z.addkey(child.deletekey(3));
+		
+		parent.putchild(z);
+		
+		parent.addkey(child.deletekey(2));
 
-			parent.addkey(child.deletekey(2));
-
-			if (!child.isleaf())
+		if (!child.isleaf())
+		{
+			Node c = null;
+			for (int i = 3; i < 6; i++)
 			{
-				Node c = null;
-				for (int i = 3; i < 5; i++)
-				{
-					c = child.deletechild(3);
-					z.putchild(c);
-				}
+				c = child.deletechild(3);
+				z.putchild(c);
 			}
 		}
-		parent.putchild(z);
 	}
 }

@@ -3,21 +3,19 @@ package bTree;
 public class NodeCreate
 {
 	public static class Node {
-		private int size; // number of key
-		private int childsize; // number of childtree
-		private int[] key = new int[4];
-		private Node[] childtree = new Node[5];
+		private int size; // size
+		private int[] key = new int[5];
+		private Node[] childtree = new Node[6];
 		private boolean isleaf;
 
 		public Node() // initialize
 		{
 			size = 0;
-			childsize = 0;
 			isleaf = true;
 		}
 
 		public boolean isfull() {
-			if (size == 4)
+			if (size == 5)
 				return true;
 			return false;
 		}
@@ -28,22 +26,6 @@ public class NodeCreate
 		
 		public void putisleaf(boolean b){
 			isleaf = b;
-		}
-
-		// find if there exists key
-		public boolean nokey(int k) {
-			boolean chk = true;
-			for (int i = 0; i < size; i++) {
-				if (k == key[i]) {
-					chk = false;
-					break;
-				}
-			}
-			return chk;
-		}
-
-		public int getchildsize() {
-			return childsize;
 		}
 
 		public int getkey(int index) {
@@ -77,7 +59,7 @@ public class NodeCreate
 		public int deletekey(int index) {
 			int removed = key[index];
 
-			for (int i = index; i <= size - 2; i++) // move forward
+			for (int i = index; i < size - 1; i++) // move forward
 				key[i] = key[i + 1];
 			key[size - 1] = -1;
 			size--;
@@ -85,14 +67,14 @@ public class NodeCreate
 		}
 
 		public void putchild(Node n) {
-			
+			int childsize = size + 1;
 			if (childsize == 0)
 			{
 				childtree[0] = n;
-				childsize++;
 			}
 			else {
 				int i = size - 1;
+				// find if 0th key of node n is smaller than key[i]
 				while (n.getkey(0) < key[i] && i >= 0)
 					i--;
 				i++;
@@ -100,17 +82,15 @@ public class NodeCreate
 					childtree[j+1] = childtree[j];
 				
 				childtree[i] = n;
-				childsize++;
 			}
 		}
 
 		public Node deletechild(int index) {
 			Node child = childtree[index];
-			for (int i = index; i < childsize - 1; i++)
+			for (int i = index; i < size; i++)
 				childtree[i] = childtree[i + 1];
 
-			childtree[childsize - 1] = null;
-			childsize--;
+			childtree[size] = null;
 			return child;
 		}
 	}
