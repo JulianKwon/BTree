@@ -5,6 +5,7 @@ public class NodeCreate
 	public static class Node
 	{
 		private int size; // size
+		private int childsize;
 		private int[] key = new int[5];
 		private Node[] childtree = new Node[6];
 		private boolean isleaf;
@@ -79,39 +80,44 @@ public class NodeCreate
 
 			for (int i = index; i < size - 1; i++) // move forward
 				key[i] = key[i + 1];
-			key[size - 1] = -1;
+			key[size - 1] = 0;
 			size--;
 			return removed;
 		}
 
 		public void putchild(Node n)
 		{
-			int childsize = size + 1;
 			n.parent = this;
 			if (childsize == 0)
 			{
 				childtree[0] = n;
-			} else
+				childsize++;
+			}
+			
+			else
 			{
 				int i = size - 1;
+				
 				// find if 0th key of node n is smaller than key[i]
 				while (n.getkey(0) < key[i] && i >= 0)
 					i--;
 				i++;
 				for (int j = childsize - 1; j >= i; j--)
 					childtree[j + 1] = childtree[j];
-
 				childtree[i] = n;
+				childsize++;
 			}
+			isleaf = false;
 		}
 
 		public Node deletechild(int index)
 		{
 			Node child = childtree[index];
-			for (int i = index; i < size; i++)
+			for (int i = index; i < childsize - 1; i++)
 				childtree[i] = childtree[i + 1];
 
-			childtree[size] = null;
+			childtree[childsize - 1] = null;
+			childsize--;
 			return child;
 		}
 	}
