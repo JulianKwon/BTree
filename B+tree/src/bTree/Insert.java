@@ -3,9 +3,10 @@ package bTree;
 public class Insert extends NodeCreate
 {
 
+	static Node root = Main.root;
+
 	public static void insert(int key)
 	{
-		Node root = Main.root;
 
 		// initialize
 		if (root == null)
@@ -14,21 +15,9 @@ public class Insert extends NodeCreate
 			node.addkey(key);
 			root = node;
 		} else
-		{
-			// if the root node is full
-			if (root.isfull())
-			{
-				Node newn = new Node();
-				newn.putchild(root);
-				newn.putisleaf(false);
-
-				// split and insert key
-				splitchild(newn, root);
-				root = newn;
-				simpleinsert(key, root);
-			} else
-				simpleinsert(key, root);
-		}
+			// if root != null
+			simpleinsert(key, root);
+		
 		Main.root = root;
 	}
 
@@ -38,38 +27,30 @@ public class Insert extends NodeCreate
 		while (i >= 0 && key < root.getkey(i))
 			i--;
 		i++;
-		if(root.getchild(i).isleaf())
+		if (root.isleaf())
 		{
-			root.getchild(i).addkey(i);
-			if(root.getchild(i).isfull())
-				splitchild(root, root.getchild(i));
-		}
-		else
-		{
-			if (root.getchild(i).isfull())
-			{
-				splitchild(root, root.getchild(i));
-
-				if (key > root.getkey(i))
-					i++;
-			}
+			root.addkey(key);
+			if (root.isfull())
+				split(root);
+		} else
 			simpleinsert(key, root.getchild(i));
-		}
 	}
 
-	public static void splitchild(Node parent, Node child)
+	public static void split(Node child)
 	{
 		// create new node for sibling of node child
 		Node z = new Node();
+		Node parent = child.getparent();
 
 		// z's leaf is y's leaf(boolean)
 		z.putisleaf(child.isleaf());
-		
-		for(int i = 0 ; i < 2;i++)
+
+		for (int i = 0; i < 2; i++)
 			z.addkey(child.deletekey(3));
-		
+
+		// add node z to parent
 		parent.putchild(z);
-		
+
 		parent.addkey(child.deletekey(2));
 
 		if (!child.isleaf())
@@ -81,5 +62,18 @@ public class Insert extends NodeCreate
 				z.putchild(c);
 			}
 		}
+		if (parent.isfull())
+		{
+			if (parent == root)
+			{
+				Node newn = new Node();
+				newn.putchild(parent);
+				split(parent);
+				root = newn;
+				
+			}else
+				split(parent);
+		}
+
 	}
 }
