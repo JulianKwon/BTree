@@ -10,8 +10,22 @@ public class Main extends NodeCreate
 
 	public static Node root;
 
-	public static int choice;
+	public static String choice;
+	public static int input;
+
 	public static Scanner s = new Scanner(System.in);
+
+	public static boolean isStringDouble(String s)
+	{
+		try
+		{
+			Double.parseDouble(s);
+			return true;
+		} catch (NumberFormatException e)
+		{
+			return false;
+		}
+	}
 
 	public static void main(String[] args)
 	{
@@ -26,11 +40,19 @@ public class Main extends NodeCreate
 			System.out.println("9.일괄삽입");
 			System.out.println("0.종료");
 			System.out.print("선택 : ");
-			choice = s.nextInt();
-			if (choice == 0)
-				break;
-			else
-				operation(choice);
+			choice = s.next();
+			if (!isStringDouble(choice))
+			{
+				System.out.println("다시 입력하세요.");
+			} else
+			{
+				input = Integer.parseInt(choice);
+
+				if (input == 0)
+					break;
+				else
+					operation(input);
+			}
 		}
 	}
 
@@ -52,8 +74,7 @@ public class Main extends NodeCreate
 					Insert.insert(input);
 			}
 
-		}
-		else if (c == 2)
+		} else if (c == 2)
 		{
 			while (true)
 			{
@@ -66,8 +87,7 @@ public class Main extends NodeCreate
 				else
 					Delete.deletekey(input, root);
 			}
-		}
-		else if (c == 3)
+		} else if (c == 3)
 		{
 			while (true)
 			{
