@@ -3,6 +3,8 @@ package bTree;
 public class Delete extends NodeCreate
 {
 	Node root = Main.root;
+	
+	
 
 	public static void deletekey(int key, Node x)
 	{
@@ -46,15 +48,58 @@ public class Delete extends NodeCreate
 		// x is a leaf and key is in x
 		else
 		{
+			Node w = x.getparent();
+			int j = w.getsize() - 1;
+			while (j >= 0 && key < w.getkey(j))
+				j--;
+			j++;
+			int v = w.getkey(j);
+			
 			if(x.getsize() > 2)
 				removekey(key, x);
-			else if ()
+			else if (y.getsize() > 2)
+			{
+				int k_ = findpredecessor(w, v);
+				movekey(k_, y, w);
+				k_ = findsuccessor(w, v);
+				movekey(k_, w, x);
+				
+				deletekey(key, x);
+			} else if (w.getsize() > 2)
+			{
+				int k_ = findsuccessor(w, v);
+				movekey(k_, z, w);
+				k_ = findpredecessor(w, v);
+				movekey(k_, w, x);
+				
+				deletekey(key, x);
+			} else
+			{
+				int k = w.getparent().getsize() - 1;
+				while (k >= 0 && v < w.getparent().getkey(k))
+					k--;
+				k++;
+				Node s = w.getparent().getchild(k + 1);
+				Node w_ = w.getparent();
+				
+				if(w_.getsize() == 2)
+				{
+					mergenode(w_, w);
+					mergenode(w, s);
+					
+					deletekey(key, x);
+				} else
+				{
+					movekey(v, w, x);
+					deletekey(key, x);
+				}
+			}
 		}
 	}
 
 	public static void movekey(int key, Node n1, Node n2)
 	{
-		int i = n1.getsize();
+		int i = n1.getsize() - 1;
 
 		while (i >= 0 && key < n1.getkey(i))
 			i--;
@@ -77,12 +122,13 @@ public class Delete extends NodeCreate
 		int i = n.getsize() - 1;
 		while (i >= 0 && k < n.getkey(i))
 			i--;
+		i++;
 		n.deletekey(i);
 	}
 
 	public static int findpredecessor(Node n, int k)
 	{
-		int i = n.getsize();
+		int i = n.getsize() - 1;
 
 		while (i >= 0 && k < n.getkey(i))
 			i--;
@@ -92,7 +138,7 @@ public class Delete extends NodeCreate
 
 	public static int findsuccessor(Node n, int k)
 	{
-		int i = n.getsize();
+		int i = n.getsize() - 1;
 
 		while (i >= 0 && k < n.getkey(i))
 			i--;
