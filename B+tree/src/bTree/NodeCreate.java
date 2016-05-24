@@ -54,6 +54,14 @@ public class NodeCreate
 		{
 			return parent;
 		}
+		
+		public int findkey(int k)
+		{
+			int idx = 0;
+			while(idx < size && key[idx] < k)
+				idx++;
+			return idx;
+		}
 
 		public void addkey(int input)
 		{

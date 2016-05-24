@@ -8,16 +8,11 @@ public class Delete extends NodeCreate
 
 	public static void deletekey(int key, Node x)
 	{
-		int i = x.getsize() - 1;
-		while (i >= 0 && key < x.getkey(i))
-			i--;
-		i++;
-		Node y = x.getchild(i);
-		Node z = x.getchild(i + 1);
-		
+		// case 2
 		if (!x.isleaf())
 		{
-
+			Node y = predecessor(x, key);
+			Node z = successor(x, key, true);
 			if (y.getsize() > 2)
 			{
 				// find predecessor key first
@@ -45,18 +40,19 @@ public class Delete extends NodeCreate
 				deletekey(key, y);
 			}
 		}
-		// x is a leaf and key is in x
+		// x is a leaf and key is in x (case 3, case 1)
 		else
 		{
-			Node w = x.getparent();
-			int j = w.getsize() - 1;
-			while (j >= 0 && key < w.getkey(j))
-				j--;
-			j++;
-			int v = w.getkey(j);
+			Node y = predecessor(x, key);
+			Node z = successor(x, key, true);
 			
+			Node w = x.getparent();
+			int v = w.getkey(w.findkey(key));
+			
+			// case 1
 			if(x.getsize() > 2)
 				removekey(key, x);
+			
 			else if (y.getsize() > 2)
 			{
 				int k_ = findpredecessor(w, v);
@@ -97,14 +93,37 @@ public class Delete extends NodeCreate
 			}
 		}
 	}
+	
+	public static Node predecessor(Node x, int k)
+	{
+		int i = x.findkey(k);
+		if(x.getchild(i).isleaf())
+			return x.getchild(i);
+		else
+			return predecessor(x.getchild(i), k);
+	}
+	
+	public static Node successor(Node x, int k, boolean leftchild)
+	{
+		int i = x.findkey(k) + 1;
+		if(leftchild == true)
+		{			
+			if(x.getchild(i).isleaf())
+				return x.getchild(i);
+			else
+				return successor(x.getchild(i), k, false);
+		}else
+		{
+			if(x.getchild(0).isleaf())
+				return x.getchild(0);
+			else
+				return successor(x.getchild(0), k, false);
+		}
+	}
 
 	public static void movekey(int key, Node n1, Node n2)
 	{
-		int i = n1.getsize() - 1;
-
-		while (i >= 0 && key < n1.getkey(i))
-			i--;
-		i++;
+		int i = n1.findkey(key);
 		n2.addkey(n1.deletekey(i));
 	}
 
@@ -120,30 +139,19 @@ public class Delete extends NodeCreate
 
 	public static void removekey(int k, Node n)
 	{
-		int i = n.getsize() - 1;
-		while (i >= 0 && k < n.getkey(i))
-			i--;
-		i++;
+		int i = n.findkey(k);
 		n.deletekey(i);
 	}
 
 	public static int findpredecessor(Node n, int k)
 	{
-		int i = n.getsize() - 1;
-
-		while (i >= 0 && k < n.getkey(i))
-			i--;
-		i++;
+		int i = n.findkey(k);
 		return n.getchild(i).getkey(n.getchild(i).getsize() - 1);
 	}
 
 	public static int findsuccessor(Node n, int k)
 	{
-		int i = n.getsize() - 1;
-
-		while (i >= 0 && k < n.getkey(i))
-			i--;
-		i++;
+		int i = n.findkey(k);
 		return n.getchild(i + 1).getkey(0);
 	}
 }
