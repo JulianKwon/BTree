@@ -70,6 +70,7 @@ public class Delete extends NodeCreate
 				int k_ = findsuccessor(w, v);
 				movekey(k_, z, w);
 				k_ = findpredecessor(w, v);
+				
 				movekey(k_, w, x);
 				
 				deletekey(key, x);
