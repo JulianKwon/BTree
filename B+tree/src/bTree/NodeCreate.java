@@ -44,6 +44,11 @@ public class NodeCreate
 		{
 			return childtree[index];
 		}
+		
+		public int getchilds()
+		{
+			return childsize;
+		}
 
 		public int getsize()
 		{
