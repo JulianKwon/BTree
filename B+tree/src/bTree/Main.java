@@ -112,6 +112,9 @@ public class Main extends NodeCreate
 			String str = s.next();
 			read(str);
 			System.out.println("»ğÀÔ ¿Ï·á");
+		} else if (c == 10)
+		{
+			System.out.println(root.getchild(0).getkey(root.getchild(0).findkey(20)));
 		}
 	}
 

@@ -45,6 +45,11 @@ public class NodeCreate
 			return childtree[index];
 		}
 		
+		public void resetchild(int index)
+		{
+			childtree[index] = null;
+		}
+		
 		public int getchilds()
 		{
 			return childsize;
