@@ -3,39 +3,99 @@ package bTree;
 public class Delete extends NodeCreate
 {
 	static Node root = Main.root;
+	
+	public static void delete(Node x, int key)
+	{
+		int i = x.findkey(key);
+		if (i < x.getsize() - 1 && x.getkey(i) == k)
+	    {
+	 
+	        // If the node is a leaf node - removeFromLeaf is called
+	        // Otherwise, removeFromNonLeaf function is called
+	        if (x.isleaf())
+	            removeFromLeaf(i, x);
+	        else
+	            removeFromNonLeaf(i, x);
+	    }
+	    else
+	    {
+	    	boolean flag = ((i == x.findkey(key))? true : false);
+	    	
+	    	if (x.getchild(i).getsize() < t)
+	    		fill(idx);
+	    }
+	}
 
 	public static void deletekey(Node x, int key)
 	{
 		int i = x.getsize();
-		Node predecessor = predecessor(x, key);
-		Node sibling = predecessor.getparent().getchild(predecessor.getparent().getsize() - 1);
 
 		// if key is in x
 		if (x.getkey(x.findkey(key)) == key)
 		{
+		
+			// x is an internal node
 			if (!x.isleaf())
 			{
-				// when x's size is smaller than 2
-				if (x.getsize() < 2)
+				Node predecessor = predecessor(x, key);
+				Node successor = successor(x, key);
+				
+				// predecessor has more than 2 keys
+				if (predecessor.getsize() > 2)
 				{
-					deletefromnode(key, x);
-					if (sibling.getsize() > 2)
-						movekey(predecessor.getkey(predecessor.getsize() - 1), predecessor, x);
-					else
-					{
-						movekey(predecessor.getkey(predecessor.getsize() - 1), predecessor, x);
-						mergenode(sibling, predecessor);
-						movekey();
-					}
-				} else
-				{
-					
+					int k_ = findpredecessor(x, key);
+					movekey(k_, predecessor, x);
+					movekey(key, x, successor);
+					deletekey(successor, key);
 				}
-			} 
+				// successor has more than 2 keys
+				else if (successor.getsize() > 2)
+				{
+					int k_ = findsuccessor(x, key);
+					movekey(k_, successor, x);
+					movekey(key, x, predecessor);
+					deletekey(predecessor, key);
+				}				
+				// nor predecessor and successor has only 2 keys
+				else
+				{
+					int k_ = findsuccessor(x, key);
+					movekey(k_, successor, x);
+					movekey(key, x, successor);
+					deletekey(successor, key);
+				}
+			}
 			// x is leaf node
 			else
 			{
-				
+				Node parent = x.getparent();
+				Node sibling = findsibling(x);
+
+				// simply remove key from leaf node
+				if (x.getsize() > 2)
+					x.deletekey(x.findkey(key));
+				// sibling has more than 2 keys
+				else if (sibling.getsize() > 2)
+				{
+					int k_ = sibling.getkey(sibling.getsize() - 1);
+					movekey(parent.getkey(parent.findkey(key) - 1), parent, x);
+					movekey(k_, sibling, parent);
+					deletekey(x, key);
+				}
+				// sibling has 2 keys -> merge
+				else
+				{
+					int ind = parent.findkey(x.getkey(0));
+					if(parent.getsize() < 2)
+					{
+						movekey(parent.getkey(ind), parent, x);
+						mergenode(x, sibling);
+					} else if (parent == root)
+					{
+						
+					}
+					
+				}
 			}
 		} else
 		{
@@ -44,36 +104,16 @@ public class Delete extends NodeCreate
 
 	}
 
-	public static void deletefromnode(int key, Node n)
-	{
-
-	}
-
 	public static Node predecessor(Node x, int k)
 	{
 		int i = x.findkey(k);
-		if (x.getchild(i).isleaf() || x.getchild(i) == null)
-			return x.getchild(i);
-		else
-			return predecessor(x.getchild(i), k);
+		return x.getchild(i);
 	}
 
-	public static Node successor(Node x, int k, boolean leftchild)
+	public static Node successor(Node x, int k)
 	{
 		int i = x.findkey(k);
-		if (leftchild == true)
-		{
-			if (x.getchild(i).isleaf() || x.getchild(i) == null)
-				return x.getchild(i);
-			else
-				return successor(x.getchild(i + 1), k, false);
-		} else
-		{
-			if (x.getchild(0).isleaf() || x.getchild(i) == null)
-				return x.getchild(0);
-			else
-				return successor(x.getchild(0), k, false);
-		}
+		return x.getchild(i + 1);
 	}
 
 	public static void movekey(int key, Node n1, Node n2)
@@ -85,12 +125,10 @@ public class Delete extends NodeCreate
 	public static void mergenode(Node n1, Node n2)
 	{
 		int n2size = n2.getsize();
-		int i = n2.getkey(0);
-
+		int j = n2.getkey(0);
 		for (int i = 0; i < n2size; i++)
 			n1.addkey(n2.deletekey(0));
-		n2.getparent().resetchild(n2.getparent().findkey(i));
-
+		n2.getparent().deletechild(n2.getparent().findkey(j));
 	}
 
 	public static void removekey(int k, Node n)
@@ -101,13 +139,14 @@ public class Delete extends NodeCreate
 
 	public static int findpredecessor(Node n, int k)
 	{
-		int i = n.findkey(k);
-		return n.getchild(i).getkey(n.getchild(i).getsize() - 1);
+		Node pred = predecessor(n, k);
+		return pred.getkey(pred.getsize() - 1);
 	}
 
 	public static int findsuccessor(Node n, int k)
 	{
-		int i = n.findkey(k);
-		return n.getchild(i + 1).getkey(0);
+		Node succ = successor(n, k, true);
+		return succ.getkey(0);
 	}
+	
 }
