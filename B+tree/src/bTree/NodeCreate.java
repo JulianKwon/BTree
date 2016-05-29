@@ -64,14 +64,6 @@ public class NodeCreate
 		{
 			return parent;
 		}
-		
-		public int findkey(int k)
-		{
-			int idx = 0;
-			while(idx < size && key[idx] < k)
-				idx++;
-			return idx;
-		}
 
 		public void addkey(int input)
 		{
@@ -117,7 +109,7 @@ public class NodeCreate
 				int i = size - 1;
 				
 				// find if 0th key of node n is smaller than key[i]
-				while (n.getkey(0) < key[i] && i >= 0)
+				while (n.getkey(0) < key[i] && i > 0)
 					i--;
 				i++;
 				for (int j = childsize - 1; j >= i; j--)

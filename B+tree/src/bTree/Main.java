@@ -1,12 +1,9 @@
 package bTree;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main extends NodeCreate
 {
@@ -112,9 +109,6 @@ public class Main extends NodeCreate
 			String str = s.next();
 			read(str);
 			System.out.println("»ðÀÔ ¿Ï·á");
-		} else if (c == 10)
-		{
-			System.out.println(root.getchild(0).getkey(root.getchild(0).findkey(20)));
 		}
 	}
 
