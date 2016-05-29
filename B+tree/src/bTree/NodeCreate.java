@@ -34,6 +34,11 @@ public class NodeCreate
 		{
 			isleaf = b;
 		}
+		
+		public void delparent()
+		{
+			parent = null;
+		}
 
 		public int getkey(int index)
 		{

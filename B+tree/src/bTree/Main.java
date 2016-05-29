@@ -88,7 +88,7 @@ public class Main extends NodeCreate
 				else if (!Search.searchkey(1, input, root, false))
 					System.out.println("삭제할 키가 존재하지 않습니다.");
 				else
-					Delete.deletekey(root, input);
+					Delete.delete(input);
 			}
 		} else if (c == 3)
 		{
